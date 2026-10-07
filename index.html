@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nabi 🐈</title>
+<meta property="og:title" content="Nabi 🐈">
+<meta property="og:description" content="Somi y Nabi">
+<meta property="og:image" content="https://somi-journey-game.s3.ap-northeast-2.amazonaws.com/nabi/icon-512.png">
+<meta property="og:type" content="website">
+<meta name="robots" content="noindex">
+<style>body{margin:0;background:#fdf8f2;color:#2b2420;font-family:system-ui,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:24px}a{color:#d9472b}</style>
+</head><body><p>🐈<br><a id="go" href="https://somi-journey-game.s3.ap-northeast-2.amazonaws.com/nabi/index.html">Abrir Nabi</a></p>
+<script>
+// 메시지별 링크: gyulo.github.io/nabi?<5글자> → 누름 기록(람다 click) → 게임. 미리보기 로봇은 JS 를 안 돌려서 자동으로 빠짐.
+(function(){
+  var GAME="https://somi-journey-game.s3.ap-northeast-2.amazonaws.com/nabi/index.html";
+  var s=(location.search.slice(1).split("&")[0]||"").toLowerCase();
+  var ok=/^[a-z2-9]{5}$/.test(s), to=GAME+(ok?"?s="+s:""), done=false;
+  function go(){ if(done) return; done=true; location.replace(to); }
+  document.getElementById("go").href=to;
+  if(!ok) return go();
+  try{
+    fetch("https://gsr5dkdpnjwgj5u7i3kwavw6dy0vdvmz.lambda-url.ap-northeast-2.on.aws/",{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"click",s:s}),keepalive:true}).then(go,go);
+  }catch(e){ go(); }
+  setTimeout(go,1200);
+})();
+</script></body></html>

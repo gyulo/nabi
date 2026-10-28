@@ -13,7 +13,7 @@
 (function(){
   var GAME="https://somi-journey-game.s3.ap-northeast-2.amazonaws.com/nabi/index.html";
   var s=(location.search.slice(1).split("&")[0]||"").toLowerCase();
-  var ok=/^[a-z2-9]{5}$/.test(s), to=GAME+(ok?"?s="+s:""), done=false;
+  var ok=/^[a-z2-9]{5}$/.test(s), to=GAME+(ok?"?s="+s+(/[?&]to=post(&|$)/.test(location.search)?"&to=post":""):""), done=false;
   function go(){ if(done) return; done=true; location.replace(to); }
   document.getElementById("go").href=to;
   if(!ok) return go();
